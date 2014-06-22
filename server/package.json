@@ -1,0 +1,13 @@
+{
+    "version": "0.0.1",
+    "description": "Datastream server for IOT data exchange",
+    "repository" : {
+	"type" : "git",
+	"url" : "http://github.com/guyc/datastream.git"
+    },
+    "dependencies": {
+	"mysql": "2.3.2",
+	"socket.io": "1.0.5",
+	"websocket": "1.0.8"
+    }
+}

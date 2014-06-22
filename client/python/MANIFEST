@@ -1,0 +1,5 @@
+LICENSE.txt
+README.txt
+setup.py
+datastream/__init__.py
+datastream/listener.py
