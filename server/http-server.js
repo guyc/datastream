@@ -36,18 +36,10 @@ exports.listen = function(port, dataConnection, wsServer) {
 
     function get(namespace, name, response)
     {
-	dataConnection.query('SELECT * FROM `data` WHERE `namespace`=? AND `name`=? LIMIT 1', [namespace, name], function(err, results) {
-            console.log(results);
-            console.log(err);
-            if (err === null) {
-		// no error
+	dataConnection.get(namespace, name, function(err, value) {
+	    if (err === null) {
 		var data = {};
-		console.log({results:results, len:results.length});
-		if (results.length > 0) {
-                    data[name]=results[0].value;
-		} else {
-                    console.log('nothing');
-		}
+		data[name] = value;
 		response.writeHead(200);
 		console.log(JSON.stringify(data));
 		response.write(JSON.stringify(data));
@@ -61,15 +53,8 @@ exports.listen = function(port, dataConnection, wsServer) {
 	for (var name in args) {
             value = args[name];
             console.log({namespace:namespace, name:name, value:value});
-            dataConnection.query('UPDATE `data` SET value=? WHERE `namespace`=? AND `name`=?',[value,namespace,name], function(err, results) {
-		console.log({results:results,err:err});
-		if (results.affectedRows == 0) {
-                    dataConnection.query('INSERT INTO `data` SET `namespace`=?, `name`=?, `value`=?',[namespace,name,value], function(err, results) {
-			console.log({results:results,err:err});
-                    });
-		}
-		wsServer.notify(namespace,name,value);
-            });
+	    dataConnection.set(namespace, name, value);
+	    wsServer.notify(namespace,name,value);
 	}
 	response.writeHead(200);
 	response.end();

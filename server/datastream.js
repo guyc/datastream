@@ -7,7 +7,8 @@ var wsServer = require('./ws-server');
 var httpServer = require('./http-server');
 var dataStore = require('./mysql-datastore');
 
-dataConnection = dataStore.connect();
+dataConnection = dataStore.connection();
+dataConnection.connect();
 wsServer.listen(config.wsPort);
 httpServer.listen(config.httpPort, dataConnection, wsServer);
 
