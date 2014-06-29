@@ -47,6 +47,25 @@ exports.connection = function() {
 		}
 		cb(err, value);
 	    });
+	},
+
+	getAll: function(namespace, pattern, cb) {
+	    console.log(pattern);
+	    this.connection.query('SELECT * FROM `data` WHERE `namespace`=? AND `name` LIKE ?', [namespace, pattern], function(err, results) {
+		console.log(this.sql);
+		console.log(results);
+		console.log(err);
+		var data = undefined;
+		if (err === null) {
+		    var data = {};
+		    for (var i=0;i<results.length;i++) {
+			data[results[i].name] = results[i].value;
+		    }
+		}
+		console.log(data);
+		cb(err, data);
+	    });
 	}
+	    
     };
 }

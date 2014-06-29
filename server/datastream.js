@@ -9,7 +9,7 @@ var dataStore = require('./mysql-datastore');
 
 dataConnection = dataStore.connection();
 dataConnection.connect();
-wsServer.listen(config.wsPort);
+wsServer.listen(config.wsPort, dataConnection);
 httpServer.listen(config.httpPort, dataConnection, wsServer);
 
 //----------------------------------------------------------------------

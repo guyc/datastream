@@ -2,7 +2,7 @@ DBNAME = datastream
 DBUSER = $(DBNAME)
 DBPASS = $(DBNAME)
 ROOTUSER = root
-ROOTPASS = password
+ROOTPASS = obamarama
 
 create:	createdb createuser grant
 
